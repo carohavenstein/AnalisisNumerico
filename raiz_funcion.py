@@ -8,7 +8,7 @@ def biseccion(a, b, programmed_error, f):
     print("Metodo de biseccion: ")
 
     c = (a + b) / 2
-    error = c
+    error = programmed_error + 1
 
     print('a', 'b', 'c', 'f(a)', 'f(c)', 'f(a)*f(c) > 0', 'Error')
     print(a, b, c, f(a), f(c), f(a) * f(c) > 0, '-')
@@ -33,7 +33,7 @@ def biseccion(a, b, programmed_error, f):
         else:
             a = c
 
-    print("Raiz biseccion:", c)
+    print("Raiz biseccion: ", c)
 
 
 # Metodo del punto fijo
@@ -134,4 +134,4 @@ if __name__=="__main__":
     newton_raphson(a, programmed_error, f, f_prime)
     secante(a, b, programmed_error, f)
 
-
+    
