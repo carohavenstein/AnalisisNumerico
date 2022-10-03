@@ -28,9 +28,11 @@ def triangular_sup(matriz_a_triangular):
 
 def sustitucion_hacia_atras(matriz_triangulada):
     shape = matriz.shape
+    X = []
     for i in range(shape[0], 0, -1):
-        for j in range(shape[1]):
-            x[j] = 
+        for j in range(shape[1]-1, 0, -1):
+            incogn = matriz_triangulada
+            x.insert(j, ) 
 
 
 if __name__=="__main__":
