@@ -1,7 +1,6 @@
 import math
 import numpy as np
-import sympy as sym
-
+import sympy as sp
 
 # Rgresion lineal por minimos cuadrados
 def regresion_lineal_min_cuadrados(xi, yi):
@@ -169,35 +168,39 @@ def interpolacion_polinom_newton(xi, yi):
 # Polinomio de Lagrange
 def polinomio_lagrange(x_puntos, y_puntos):
     
-    x = sym.Symbol('x')
+    x = sp.symbol('x')
 
     n = len(x_puntos)
-    li = 1              # elemento neutro multiplicacion
-    p_lagrange = 0      # elemento neutro suma
+    li = 1                      # elemento neutro multiplicacion
+    p_lagrange = 0              # elemento neutro suma
 
     for i in range(n):
         for j in range(0, n):   
             if j != i:
                 li *= ((x-x[j])/(x-x[j]))
         
-        p_lagrange += li  
+        p_lagrange += li * y[i]
 
-
+    # grado del polinomio de lagrange es la mayor potencia de x
     print(p_lagrange)
    
-                
+
+# Trazadoras cúbicas
+def trazadora_cubica():
+    pass
+
 
 if __name__ == '__main__':
     """
-    xi_lls = [1, 2, 3, 4, 5, 6, 7]
-    yi_lls = [0.50, 2.50, 2.00, 4.00, 3.50, 6.00, 5.50]
-    regresion_lineal_min_cuadrados(xi_lls, yi_lls)
+        xi_lls = [1, 2, 3, 4, 5, 6, 7]
+        yi_lls = [0.50, 2.50, 2.00, 4.00, 3.50, 6.00, 5.50]
+        regresion_lineal_min_cuadrados(xi_lls, yi_lls)
 
-    xi_exp = [1, 2, 3, 4, 5]
-    yi_exp = [0.5, 1.7, 3.4, 5.7, 8.4]
-    modelo_exp(xi_exp, yi_exp)
-    modelo_potencial(xi_exp, yi_exp)
-    modelo_crecimiento(xi_exp, yi_exp)
+        xi_exp = [1, 2, 3, 4, 5]
+        yi_exp = [0.5, 1.7, 3.4, 5.7, 8.4]
+        modelo_exp(xi_exp, yi_exp)
+        modelo_potencial(xi_exp, yi_exp)
+        modelo_crecimiento(xi_exp, yi_exp)
     """
 
     #para polinomio de lagrange
