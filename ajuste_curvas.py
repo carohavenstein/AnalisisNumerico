@@ -1,5 +1,6 @@
 import math
 import numpy as np
+import sympy as sym
 
 
 # Rgresion lineal por minimos cuadrados
@@ -165,7 +166,29 @@ def interpolacion_polinom_newton(xi, yi):
             fn(x) += f[x2,x1,x0](x-x0)(x-x1)
 """
 
+# Polinomio de Lagrange
+def polinomio_lagrange(x_puntos, y_puntos):
+    
+    x = sym.Symbol('x')
+
+    n = len(x_puntos)
+    li = 1              # elemento neutro multiplicacion
+    p_lagrange = 0      # elemento neutro suma
+
+    for i in range(n):
+        for j in range(0, n):   
+            if j != i:
+                li *= ((x-x[j])/(x-x[j]))
+        
+        p_lagrange += li  
+
+
+    print(p_lagrange)
+   
+                
+
 if __name__ == '__main__':
+    """
     xi_lls = [1, 2, 3, 4, 5, 6, 7]
     yi_lls = [0.50, 2.50, 2.00, 4.00, 3.50, 6.00, 5.50]
     regresion_lineal_min_cuadrados(xi_lls, yi_lls)
@@ -175,3 +198,9 @@ if __name__ == '__main__':
     modelo_exp(xi_exp, yi_exp)
     modelo_potencial(xi_exp, yi_exp)
     modelo_crecimiento(xi_exp, yi_exp)
+    """
+
+    #para polinomio de lagrange
+    x_puntos = [0.00, 1.00, 2.00, 3.00]
+    y_puntos = [1.00, 2.7182, 7.3891, 20.0855]
+    polinomio_lagrange(x_puntos, y_puntos)
