@@ -1,7 +1,19 @@
 # Análisis Numérico:
 
 ## Raíces de ecuaciones:
-- Método de bisección
-- Método de Punto fijo
-- Método de Newton Raphson
-- Método de la secante
+- [X] Método de bisección
+- [X] Método de Punto fijo
+- [X] Método de Newton Raphson
+- [X] Método de la secante
+
+## Sistema de ecuaciones lineales:
+- [] Método de eliminación Gaussiana
+- [] Método de Gauss-Seidel
+- [] Método de LU
+
+## Ajuste de curvas:
+- [X] Regresión lineal por mínimos cuadrados
+- [] Modelos no lineales (exponencial, potencial y de crecimiento)
+- [] Interpolación polinomial de Newton
+- [] Polinomio de Lagrange
+- [] Trazadoras cúbicas (natural y condicionada)
