@@ -26,9 +26,11 @@ def triangular_sup(matriz_a_triangular):
     return matriz
 
 
-def sustitucion_hacia_atras():
-    pass
-
+def sustitucion_hacia_atras(matriz_triangulada):
+    shape = matriz.shape
+    for i in range(shape[0], 0, -1):
+        for j in range(shape[1]):
+            x[j] = 
 
 
 if __name__=="__main__":
@@ -50,3 +52,4 @@ if __name__=="__main__":
     ], dtype=np.longdouble)
 
     triangulada = triangular_sup(ab)
+    sustitucion_hacia_atras(triangulada)
