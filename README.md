@@ -7,7 +7,7 @@
 - [X] Método de la secante
 
 ## Sistema de ecuaciones lineales:
-- [] Método de eliminación Gaussiana
+- [X] Método de eliminación Gaussiana
 - [] Método de Gauss-Seidel
 - [] Método de LU
 
