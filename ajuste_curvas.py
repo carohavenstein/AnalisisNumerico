@@ -193,12 +193,19 @@ def polinomio_lagrange(x_puntos, y_puntos):
     
 
 # Trazadoras cúbicas
-def trazadora_cubica_natural(x, y, h):
+def trazadora_cubica_natural(x, y):
 
     w = sp.Symbol('w')
 
     n = len(x)
     print("n:", n)
+    h = []
+
+    for j in range(0, n-1):
+        h.append(x[j+1]-x[j])
+
+    print("h: ", h)
+
     alfa = []
     
     # tomo i[0] = 1, mu[0] = 0, z[0] = 0
@@ -245,28 +252,82 @@ def trazadora_cubica_natural(x, y, h):
         print("Polinomio ", i, ": ", polinomio)
 
 
+def trazadora_cubica_condicionada(x, y):
+
+    w = sp.Symbol('w')
+
+    n = len(x)
+    print("n:", n)
+    h = []
+
+    for j in range(0, n-1):
+        h.append(x[j+1]-x[j])
+
+    print("h: ", h)
+
+    alfa = []
+
+    for j in range(1, n-1):
+        alfa.append((3/h[j])*(y[j+1]-y[j])-(3/h[j-1])*(y[j]-y[j-1]))
+
+    # tomo i[0] = 2*h[0], mu[0] = 0.5, z[0] = alfa[0]/i[0]
+    i = [2*h[0]]
+    mu = [0.5]
+    z = [alfa[0]/i[0]]
+
+    for j in range(1, n-1):
+        i.append(2*(x[j+1]-x[j-1])-h[j-1]*mu[j-1])
+        mu.append(h[j]/i[j])
+        z.append((alfa[j-1]-h[j-1]*z[j-1])/i[j])
+
+    print("alfa: ", alfa)
+    print("I: ", i)
+    print("mu: ", mu)
+    print("z: ", z)
+
+    c = np.zeros(n)
+    b = np.zeros(n)
+    d = np.zeros(n)
+
+    # tomo i[n] = h[n-1]*(2-mu[n-1]) CAMBIE N-1 POR N-2 OUT OF RANGE
+    i.append(h[n-2]*(2-mu[n-2]))
+    # tomo z[n] = (y[n]-h[n-1]*z[n-1])/i[n]
+    z.append((y[n]-h[n-2]*z[n-2])/i[n])
+    # tomo c[n] = z[n]
+    c[n] = z[n]
+
+    for i in range(n-2, -1, -1):
+        c[i] = (z[i]-mu[i]*c[i+1])
+        b[i] = ((y[i+1]-y[i])/h[i]-h[i]*(c[i+1]+2*c[i])/3)
+        d[i] = ((c[i+1]-c[i])/3*h[i])
+
+    print("c: ", c)
+    print("b: ", b)
+    print("d: ", d)
+
+    
 
 if __name__ == '__main__':
-    
-    xi_lls = [1, 2, 3, 4, 5, 6, 7]
-    yi_lls = [0.50, 2.50, 2.00, 4.00, 3.50, 6.00, 5.50]
-    regresion_lineal_min_cuadrados(xi_lls, yi_lls)
+    """
+        xi_lls = [1, 2, 3, 4, 5, 6, 7]
+        yi_lls = [0.50, 2.50, 2.00, 4.00, 3.50, 6.00, 5.50]
+        regresion_lineal_min_cuadrados(xi_lls, yi_lls)
 
-    xi_exp = [1, 2, 3, 4, 5]
-    yi_exp = [0.5, 1.7, 3.4, 5.7, 8.4]
-    modelo_exp(xi_exp, yi_exp)
-    modelo_potencial(xi_exp, yi_exp)
-    modelo_crecimiento(xi_exp, yi_exp)
-    
-    # para polinomio de lagrange
-    x_puntos = [0.00, 1.00, 2.00, 3.00]
-    y_puntos = [1.00, 2.7182, 7.3891, 20.0855]
-    polinomio_lagrange(x_puntos, y_puntos)
+        xi_exp = [1, 2, 3, 4, 5]
+        yi_exp = [0.5, 1.7, 3.4, 5.7, 8.4]
+        modelo_exp(xi_exp, yi_exp)
+        modelo_potencial(xi_exp, yi_exp)
+        modelo_crecimiento(xi_exp, yi_exp)
+        
+        # para polinomio de lagrange
+        x_puntos = [0.00, 1.00, 2.00, 3.00]
+        y_puntos = [1.00, 2.7182, 7.3891, 20.0855]
+        polinomio_lagrange(x_puntos, y_puntos)
+    """
 
-    
     # para trazadora cubica
     x = [0.0, 1.0, 2.0, 3.0]
     y = [1.0, 2.7182, 7.3891, 20.0855]
-    h = [1.0, 1.0, 1.0]
 
-    trazadora_cubica_natural(x, y, h)
+    # trazadora_cubica_natural(x, y)
+    trazadora_cubica_condicionada(x, y)
