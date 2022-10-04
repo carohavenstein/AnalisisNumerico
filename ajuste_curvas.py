@@ -111,7 +111,7 @@ def modelo_potencial(xi, yi):
         print('Error')
 
 
-# Modelo de crecimiento ----------------------> CONTROLAR
+# Modelo de crecimiento
 # y = A * (x / (b + x))
 def modelo_crecimiento(xi, yi):
     if len(xi) == len(yi):
@@ -168,42 +168,105 @@ def interpolacion_polinom_newton(xi, yi):
 # Polinomio de Lagrange
 def polinomio_lagrange(x_puntos, y_puntos):
     
-    x = sp.symbol('x')
+    x = sp.Symbol('x')
 
     n = len(x_puntos)
-    li = 1                      # elemento neutro multiplicacion
     p_lagrange = 0              # elemento neutro suma
 
     for i in range(n):
+        li = 1                  #elemento neutro multiplicacion
         for j in range(0, n):   
             if j != i:
-                li *= ((x-x[j])/(x-x[j]))
-        
-        p_lagrange += li * y[i]
+                li *= ((x-x_puntos[j])/(x_puntos[i]-x_puntos[j]))
+                p_lagrange += li * y_puntos[i]
+    
+    p_lagrange = sp.simplify(p_lagrange)
 
     # grado del polinomio de lagrange es la mayor potencia de x
-    print(p_lagrange)
-   
+    print("Polinomio Lagrange: ", p_lagrange)
+    # evaluar polinomio lagrange en puntos x dados
+    
+
+    for i in range(n):
+        evaluar = x_puntos[i]
+        print("Polinomio Lagrange valuado en ", x_puntos[i], ": ", p_lagrange.subs(x, evaluar))
+    
 
 # Trazadoras cúbicas
-def trazadora_cubica():
-    pass
+def trazadora_cubica_natural(x, y, h):
+
+    w = sp.Symbol('w')
+
+    n = len(x)
+    print("n:", n)
+    alfa = []
+    
+    # tomo i[0] = 1, mu[0] = 0, z[0] = 0
+    i = [1]
+    mu = [0]
+    z = [0]
+
+    for j in range(1, n-1):
+        alfa.append((3/h[j])*(y[j+1]-y[j])-(3/h[j-1])*(y[j]-y[j-1])) 
+        i.append(2*(x[j+1]-x[j-1])-h[j-1]*mu[j-1])
+        mu.append(h[j]/i[j])
+        z.append((alfa[j-1]-h[j-1]*z[j-1])/i[j])
+
+    print("alfa: ", alfa)
+    print("I: ", i)
+    print("mu: ", mu)
+    print("z: ", z)
+
+    # tomo i[n] = 1, z[n] = 0, c[n] = 0
+    i.append(1)
+    z.append(0)
+
+
+    c = np.zeros(n)
+    b = []
+    d = []
+
+    for i in range(n-2, -1, -1):
+        c[i] = (z[i]-mu[i]*c[i+1])
+        b.append((y[i+1]-y[i])/h[i]-h[i]*(c[i+1]+2*c[i])/3)
+        d.append((c[i+1]-c[i])/3*h[i])
+
+
+    print("c: ", c)
+    b = list(reversed(b))
+    print("b: ", b)
+    d = list(reversed(d))
+    print("d: ", d)
+
+    polinomio = 0
+    for i in range(n-1):
+        polinomio = y[i] + b[i]*(w - x[i]) + c[i]*(w - x[i])**2 + d[i]*(w - x[i])**3
+        polinomio = sp.simplify(polinomio)
+        print("Polinomio ", i, ": ", polinomio)
+
 
 
 if __name__ == '__main__':
-    """
-        xi_lls = [1, 2, 3, 4, 5, 6, 7]
-        yi_lls = [0.50, 2.50, 2.00, 4.00, 3.50, 6.00, 5.50]
-        regresion_lineal_min_cuadrados(xi_lls, yi_lls)
+    
+    xi_lls = [1, 2, 3, 4, 5, 6, 7]
+    yi_lls = [0.50, 2.50, 2.00, 4.00, 3.50, 6.00, 5.50]
+    regresion_lineal_min_cuadrados(xi_lls, yi_lls)
 
-        xi_exp = [1, 2, 3, 4, 5]
-        yi_exp = [0.5, 1.7, 3.4, 5.7, 8.4]
-        modelo_exp(xi_exp, yi_exp)
-        modelo_potencial(xi_exp, yi_exp)
-        modelo_crecimiento(xi_exp, yi_exp)
-    """
-
-    #para polinomio de lagrange
+    xi_exp = [1, 2, 3, 4, 5]
+    yi_exp = [0.5, 1.7, 3.4, 5.7, 8.4]
+    modelo_exp(xi_exp, yi_exp)
+    modelo_potencial(xi_exp, yi_exp)
+    modelo_crecimiento(xi_exp, yi_exp)
+    
+    # para polinomio de lagrange
     x_puntos = [0.00, 1.00, 2.00, 3.00]
     y_puntos = [1.00, 2.7182, 7.3891, 20.0855]
     polinomio_lagrange(x_puntos, y_puntos)
+
+    
+    # para trazadora cubica
+    x = [0.0, 1.0, 2.0, 3.0]
+    y = [1.0, 2.7182, 7.3891, 20.0855]
+    h = [1.0, 1.0, 1.0]
+
+    trazadora_cubica_natural(x, y, h)
