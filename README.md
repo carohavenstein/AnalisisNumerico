@@ -13,7 +13,7 @@
 
 ## Ajuste de curvas:
 - [X] Regresión lineal por mínimos cuadrados
-- [] Modelos no lineales (exponencial, potencial y de crecimiento)
+- [X] Modelos no lineales (exponencial, potencial y de crecimiento)
 - [] Interpolación polinomial de Newton
-- [] Polinomio de Lagrange
+- [X] Polinomio de Lagrange
 - [] Trazadoras cúbicas (natural y condicionada)
