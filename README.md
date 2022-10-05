@@ -8,12 +8,12 @@
 
 ## Sistema de ecuaciones lineales:
 - [X] Método de eliminación Gaussiana
-- [] Método de Gauss-Seidel
-- [] Método de LU
+- [X] Método de Gauss-Seidel
+- [X] Método de LU
 
 ## Ajuste de curvas:
 - [X] Regresión lineal por mínimos cuadrados
 - [X] Modelos no lineales (exponencial, potencial y de crecimiento)
 - [] Interpolación polinomial de Newton
 - [X] Polinomio de Lagrange
-- [] Trazadoras cúbicas (natural y condicionada)
+- [X] Trazadoras cúbicas (natural y condicionada)
